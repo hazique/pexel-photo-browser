@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useImmer } from "use-immer";
 
 import Image from "./image";
 
@@ -11,15 +10,10 @@ export default function ImageBrowser(props) {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-
         const fetchData = async () => {
-
-            fetch("/api/photos/curated")
-                .then(res => res.json())
-                .then(json => {
-                    setData(json);
-                })
-                .catch(e => console.log(e))
+            const resp = await fetch("/api/photos/curated");
+            const json = await resp.json();
+            setData(json);
         }
         fetchData();
     }, []);
