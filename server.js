@@ -15,7 +15,7 @@ app.prepare()
     server.get('/api/photos/curated', async (req, res) => {
       
       const curatedPics = await pexelsClient.photos.curated({per_page: 10});
-      return res.send({ curated: curatedPics});
+      return res.send(curatedPics);
     });
 
     server.get('/api/photos/search', async (req, res) => {
