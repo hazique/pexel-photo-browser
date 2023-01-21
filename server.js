@@ -12,16 +12,16 @@ app.prepare()
   .then(() => {
     const server = express();
 
-    server.get('/api/photos/curated', async (req, res) => {
+    server.get('/api/photos/curated/:pageNum', async (req, res) => {
       
-      const curatedPics = await pexelsClient.photos.curated({per_page: 10});
+      const curatedPics = await pexelsClient.photos.curated({per_page: 10, page: req.params.pageNum});
       return res.send(curatedPics);
     });
 
-    server.get('/api/photos/search', async (req, res) => {
-      const query = "Nature";
-      const curatedPics = await pexelsClient.photos.search({query, per_page: 10});
-      return res.send({ curated: curatedPics});
+    server.get('/api/photos/search/:searchTerm/:pageNum', async (req, res) => {
+      const query = req.params.searchTerm;
+      const curatedPics = await pexelsClient.photos.search({query, per_page: 10, page: req.params.pageNum});
+      return res.send(curatedPics);
     });
 
     server.get('*', (req, res) => {
