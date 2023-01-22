@@ -1,12 +1,4 @@
-import React from "react";
-import { useState } from "react";
-
-import Search from "./search";
-
 const Navbar = () => {
-    const [isNavCollapsed, setIsNavCollapsed] = useState(true);
-
-    const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
     return (
         <nav className="navbar navbar-expand-lg rounded">
@@ -26,14 +18,6 @@ const Navbar = () => {
 
                 <hr className="mt-2 mb-4" />
 
-                {/* below commented code helps to move the search bar into the navbar */}
-                {/* <button className="custom-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavBar" aria-controls="topNavBar" aria-expanded={!isNavCollapsed ? true : false} aria-label="Toggle navigation" onClick={handleNavCollapse}>
-                    <span className="navbar-toggler-icon"></span>
-                </button> */}
-
-                {/* <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse mt-2`} id="topNavBar">
-                    
-                </div> */}
             </div>
         </nav>
     );

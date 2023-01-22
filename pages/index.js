@@ -2,19 +2,14 @@ import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import ImageBrowser from './imageBrowser';
-import { createContext, useEffect, useState } from 'react';
+import { useState } from 'react';
+
 import Navbar from './navBar';
 import Search from './search';
 
-export const SearchStringContext = createContext(null);
-
 export default function App() {
 
-  const [searchString, setSearchString] = useState('');
-
-  useEffect(()=>{
-    setSearchString(localStorage.getItem('searchString') || '');
-  }, []);
+  const [searchString, setSearchString] = useState(null);
 
   return (
     <div>
@@ -23,14 +18,12 @@ export default function App() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <SearchStringContext.Provider value={{ searchString, setSearchString }} >
         <main className="container">
           <Navbar />
-          <Search />
-          <ImageBrowser />
+          <Search searchString={searchString} setSearchString={setSearchString}/>
+          <ImageBrowser searchString={searchString} />
 
         </main>
-      </SearchStringContext.Provider>
     </div>
 
   )

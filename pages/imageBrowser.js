@@ -1,13 +1,14 @@
-import { useContext, useEffect, useState } from "react";
-import { SearchStringContext } from "./";
+import { useEffect, useState } from "react";
+import usePrevious from "./usePrevious";
 
 import Image from "./image";
 import PageNumInput from "./pageNumInput";
 
+import { ImageList, ImageListItem, ImageListItemBar, Link } from "@mui/material";
 
-export default function ImageBrowser(props) {
 
-    const { searchString, setSearchString } = useContext(SearchStringContext);
+export default function ImageBrowser({ searchString }) {
+
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState();
     const [curPage, setCurPage] = useState(1);
@@ -15,6 +16,7 @@ export default function ImageBrowser(props) {
     const [totalResults, setTotalResults] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
 
+    const prevSearchString = usePrevious(searchString);
     const navigate = (e) => {
 
         if (e.target.innerText === "»")
@@ -45,36 +47,37 @@ export default function ImageBrowser(props) {
 
     // cDM - fetch data on component load
     useEffect(() => {
+        debugger;
         console.log("Effect 1");
+
+        if (!searchString)
+            return;
+
         if (searchString === '') {
             fetchCurated();
             return;
         }
-        else {
-            console.log(searchString)
-            // fetchSearchResults(searchString);
-            setSearchString(searchString + ' ');
-        }
+
+        fetchSearchResults(searchString);
+
     }, []);
 
-    // cDU - fetch data on search string modification
     useEffect(() => {
+        debugger;
         console.log("Effect 2");
-        if (searchString !== '') {
-            console.log("inside searchString Effect");
-            fetchSearchResults(searchString);
-            // setCurPage(1);
-        }
-
-        if (searchString === '') {
-            // setCurPage(1);
+        if (searchString === '' || searchString === undefined) {
             fetchCurated();
         }
 
+        if (searchString && searchString !== '' && searchString.length > 0) {
+            console.log("inside savedSearchString Effect");
+            fetchSearchResults(searchString);
+        }
     }, [searchString]);
 
     // Run effects on data load
     useEffect(() => {
+        debugger;
         console.log("Effect 3: ", data);
         if (data && data.photos) {
             setIsLoading(false);
@@ -84,14 +87,8 @@ export default function ImageBrowser(props) {
     }, [data]);
 
     useEffect(() => {
-        console.log("Effect 4");
-        const pages = Math.floor(totalResults / resultsPerPage);
-        setTotalPages(pages);
-    }, [totalResults])
-
-    useEffect(() => {
-        console.log("Effect 4");
-        console.log("New page selected: ", curPage);
+        debugger;
+        console.log("Effect 4 | New page selected: ", curPage);
         if (curPage === "")
             return;
 
@@ -102,29 +99,50 @@ export default function ImageBrowser(props) {
             pageNum = 1;
         }
 
-        if (searchString !== '') {
-            fetchSearchResults(searchString, curPage);
-            return;
+        if (searchString === '' || searchString === null) {
+            fetchCurated(curPage);
         }
-        else fetchCurated(curPage);
+        else {
+            fetchSearchResults(searchString, curPage);
+        }
 
     }, [curPage]);
 
+
+    useEffect(() => {
+        debugger;
+        console.log("Effect 5");
+        const pages = Math.floor(totalResults / resultsPerPage);
+        setTotalPages(pages);
+    }, [totalResults])
+
+
     return (
         <div>
-            <div className="container">
+            <div className="container d-flex flex-column">
                 <div className="row text-center text-lg-start">
                     {isLoading ?
                         <Image src="https://source.unsplash.com/2ShvY8Lf6l0/800x599" />
-                        :
-                        data.photos.map(photo => <Image key={photo.id} data={photo} />)
+                        :                        
+                        <ImageList variant="masonry" cols={3} gap={8}>
+                            {data.photos && data.photos.map((photo) => (
+                                <ImageListItem key={photo.id}>
+                                    <img
+                                        src={photo.src.original}
+                                        loading="lazy"
+                                    />
+                                    <ImageListItemBar position="bottom" title={<Link color="inherit" href={photo.photographer_url} target="_blank">{photo.photographer}</Link>} />
+                                </ImageListItem>
+                            ))}
+                        </ImageList>
                     }
+
                 </div>
 
                 {
                     totalResults > 10 && totalPages > 1 &&
                     (
-                        <div className="pagination w-25 mx-auto mb-4">
+                        <div className="pagination mx-auto mb-4">
                             <button className={`page-link page-item ${curPage == 1 ? "disabled" : ""}`} disabled={curPage === 1} onClick={navigate} aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </button>
