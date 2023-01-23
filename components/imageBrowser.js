@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import usePrevious from "../hooks/usePrevious";
 
-import Image from "../components/image";
 import PageNumInput from "../components/pageNumInput";
 
-import { ImageList, ImageListItem, ImageListItemBar, Link } from "@mui/material";
+import { ImageList, ImageListItem, ImageListItemBar, Link, CircularProgress } from "@mui/material";
 
 
 export default function ImageBrowser({ searchString }) {
@@ -18,7 +17,7 @@ export default function ImageBrowser({ searchString }) {
 
     const prevSearchString = usePrevious(searchString);
     const navigate = (e) => {
-
+        setIsLoading(true);
         if (e.target.innerText === "»")
             setCurPage(curPage + 1);
 
@@ -50,7 +49,7 @@ export default function ImageBrowser({ searchString }) {
         debugger;
         console.log("Effect 1 | Previous search String: ", prevSearchString);
 
-        if (!searchString)
+        if (prevSearchString === undefined || searchString === null)
             return;
 
         if (searchString === '') {
@@ -65,14 +64,20 @@ export default function ImageBrowser({ searchString }) {
     useEffect(() => {
         debugger;
         console.log("Effect 2");
-        if (searchString === '' || searchString === undefined) {
-            fetchCurated();
+        setIsLoading(true);
+        if (prevSearchString === undefined || searchString === null)
+            return;
+        
+        if (searchString && searchString !== '' && searchString.length > 0) {
+            fetchSearchResults(searchString);
+            return;
         }
 
-        if (searchString && searchString !== '' && searchString.length > 0) {
-            console.log("inside savedSearchString Effect");
-            fetchSearchResults(searchString);
+        if (searchString === '' || searchString === undefined) {
+            fetchCurated();
+            return;
         }
+
     }, [searchString]);
 
     // Run effects on data load
@@ -81,7 +86,6 @@ export default function ImageBrowser({ searchString }) {
         console.log("Effect 3: ", data);
         if (data && data.photos) {
             setIsLoading(false);
-            // setCurPage(data.page);
             setTotalResults(data.total_results);
         }
     }, [data]);
@@ -99,11 +103,14 @@ export default function ImageBrowser({ searchString }) {
             pageNum = 1;
         }
 
-        if (searchString === '' || searchString === null) {
-            fetchCurated(curPage);
+        if (searchString && searchString !== '' && searchString.length > 0) {
+            fetchSearchResults(searchString, pageNum);
+            return;
         }
-        else {
-            fetchSearchResults(searchString, curPage);
+
+        if (searchString === '' || searchString === undefined) {
+            fetchCurated(pageNum);
+            return;
         }
 
     }, [curPage]);
@@ -122,7 +129,9 @@ export default function ImageBrowser({ searchString }) {
             <div className="container d-flex flex-column">
                 <div className="row text-center text-lg-start">
                     {isLoading ?
-                        <Image src="https://source.unsplash.com/2ShvY8Lf6l0/800x599" />
+                        <div className="mt-5">
+                            <CircularProgress color="inherit" />
+                        </div>
                         :                        
                         <ImageList variant="masonry" cols={3} gap={8}>
                             {data.photos && data.photos.map((photo) => (
