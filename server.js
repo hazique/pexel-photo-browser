@@ -1,17 +1,17 @@
 const express = require('express');
 const next = require('next');
 
-require('dotenv').config();
+// require('dotenv').config();
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const { createClient } = require('pexels');
+
 app.prepare()
   .then(() => {
     const server = express();
-
-    const { createClient } = require('pexels');
     const pexelsClient = createClient(process.env.PEXELS_API_KEY);
     console.log("API KEY: ", process.env.PEXELS_API_KEY || "Key not found")
 
