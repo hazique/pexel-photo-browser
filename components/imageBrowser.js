@@ -46,9 +46,6 @@ export default function ImageBrowser({ searchString }) {
 
     // cDM - fetch data on component load
     useEffect(() => {
-        debugger;
-        console.log("Effect 1 | Previous search String: ", prevSearchString);
-
         if (prevSearchString === undefined || searchString === null)
             return;
 
@@ -62,8 +59,6 @@ export default function ImageBrowser({ searchString }) {
     }, []);
 
     useEffect(() => {
-        debugger;
-        console.log("Effect 2");
         setIsLoading(true);
         if (prevSearchString === undefined || searchString === null)
             return;
@@ -82,8 +77,6 @@ export default function ImageBrowser({ searchString }) {
 
     // Run effects on data load
     useEffect(() => {
-        debugger;
-        console.log("Effect 3: ", data);
         if (data && data.photos) {
             setIsLoading(false);
             setTotalResults(data.total_results);
@@ -91,8 +84,6 @@ export default function ImageBrowser({ searchString }) {
     }, [data]);
 
     useEffect(() => {
-        debugger;
-        console.log("Effect 4 | New page selected: ", curPage);
         if (curPage === "")
             return;
 
@@ -117,8 +108,6 @@ export default function ImageBrowser({ searchString }) {
 
 
     useEffect(() => {
-        debugger;
-        console.log("Effect 5");
         const pages = Math.floor(totalResults / resultsPerPage);
         setTotalPages(pages);
     }, [totalResults])
