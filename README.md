@@ -1,4 +1,4 @@
-# README
+**The Vercel Production URL is yet to be setup correctly. Any assistance with that would be highly appreciated.**
 
 **Code Setup Instructions:**
 
@@ -25,7 +25,7 @@ On completing the above steps, you need to open a Terminal window in the project
 
 **Setting up the API key in the Project**
 
-- Make a `.env` file in the project root directory and paste your API key in the format below
+- Make a `.env.local` file in the project root directory and paste your API key in the format below
 
 ```json
 PEXELS_API_KEY="<YOUR API KEY>"
