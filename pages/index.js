@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import ImageBrowser from './imageBrowser';
+import ImageBrowser from '../components/imageBrowser';
 import { useState } from 'react';
 
-import Navbar from './navBar';
-import Search from './search';
+import Navbar from '../components/navBar';
+import Search from '../components/search';
 
 export default function App() {
 

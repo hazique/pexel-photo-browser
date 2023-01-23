@@ -1,8 +1,10 @@
 const express = require('express');
 const next = require('next');
 
+require('dotenv').config();
+
 const {createClient} = require('pexels');
-const pexelsClient = createClient('563492ad6f917000010000012a940a3e6872471ab80533d31217887f');
+const pexelsClient = createClient(process.env.PEXELS_API_KEY);
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import usePrevious from "./usePrevious";
+import usePrevious from "../hooks/usePrevious";
 
-import Image from "./image";
-import PageNumInput from "./pageNumInput";
+import Image from "../components/image";
+import PageNumInput from "../components/pageNumInput";
 
 import { ImageList, ImageListItem, ImageListItemBar, Link } from "@mui/material";
 
@@ -48,7 +48,7 @@ export default function ImageBrowser({ searchString }) {
     // cDM - fetch data on component load
     useEffect(() => {
         debugger;
-        console.log("Effect 1");
+        console.log("Effect 1 | Previous search String: ", prevSearchString);
 
         if (!searchString)
             return;

@@ -33,7 +33,7 @@ To develop and run the project locally use
 npm run dev
 ```
 
-To create and deploy a build run:
+To create and deploy a build, run:
 
 ```jsx
 npm run build

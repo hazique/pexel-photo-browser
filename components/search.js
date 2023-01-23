@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import useLocalStorage from "./useLocalStorage";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 export default function Search({searchString, setSearchString }) {
 
@@ -16,7 +16,6 @@ export default function Search({searchString, setSearchString }) {
     };
 
     useEffect(()=>{
-        debugger;
         if (savedSearchString !== '')
             setSearchString(savedSearchString);
             
