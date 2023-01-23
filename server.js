@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const {createClient} = require('pexels');
 const pexelsClient = createClient(process.env.PEXELS_API_KEY);
+console.log("API KEY: ", process.env.PEXELS_API_KEY || "Key not found")
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
