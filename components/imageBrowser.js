@@ -126,7 +126,7 @@ export default function ImageBrowser({ searchString }) {
                             {data.photos && data.photos.map((photo) => (
                                 <ImageListItem key={photo.id}>
                                     <img
-                                        src={photo.src.original}
+                                        src={photo.src.medium}
                                         loading="lazy"
                                     />
                                     <ImageListItemBar position="bottom" title={<Link color="inherit" href={photo.photographer_url} target="_blank">{photo.photographer}</Link>} />
