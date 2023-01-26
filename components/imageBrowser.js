@@ -3,7 +3,7 @@ import usePrevious from "../hooks/usePrevious";
 
 import PageNumInput from "../components/pageNumInput";
 
-import { ImageList, ImageListItem, ImageListItemBar, Link, CircularProgress } from "@mui/material";
+import { ImageList, ImageListItem, ImageListItemBar, Link, LinearProgress } from "@mui/material";
 
 
 export default function ImageBrowser({ searchString }) {
@@ -62,7 +62,7 @@ export default function ImageBrowser({ searchString }) {
         setIsLoading(true);
         if (prevSearchString === undefined || searchString === null)
             return;
-        
+
         if (searchString && searchString !== '' && searchString.length > 0) {
             fetchSearchResults(searchString);
             return;
@@ -115,13 +115,13 @@ export default function ImageBrowser({ searchString }) {
 
     return (
         <div>
-            <div className="container d-flex flex-column">
+            <div className="container d-flex flex-column justify-content-center">
                 <div className="row text-center text-lg-start">
                     {isLoading ?
-                        <div className="mt-5">
-                            <CircularProgress color="inherit" />
+                        <div className="mt-5 container-fluid">
+                            <LinearProgress color="inherit" className="mx-5 px-5"/>
                         </div>
-                        :                        
+                        :
                         <ImageList variant="masonry" cols={3} gap={8}>
                             {data.photos && data.photos.map((photo) => (
                                 <ImageListItem key={photo.id}>
