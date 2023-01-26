@@ -1,4 +1,4 @@
-**The Vercel Production URL is yet to be setup correctly. Any assistance with that would be highly appreciated.**
+**Demo URL: https://pexel-browser.onrender.com.**
 
 **Code Setup Instructions:**
 
@@ -49,5 +49,5 @@ To create and deploy a build, run:
 
 ```jsx
 npm run build
-npm serve
+npm run serve
 ```
