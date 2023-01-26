@@ -4,6 +4,7 @@ const next = require('next');
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
+const port = process.env.PORT || 3001;
 
 const { createClient } = require('pexels');
 
@@ -11,7 +12,7 @@ app.prepare()
   .then(() => {
     const server = express();
     const pexelsClient = createClient(process.env.PEXELS_API_KEY);
-    console.log("API KEY: ", process.env.PEXELS_API_KEY || "Key not found")
+    console.log("API KEY: ", process.env.PEXELS_API_KEY ? true : false);
 
     server.get('/api/photos/curated/:pageNum', async (req, res) => {
 
@@ -29,9 +30,9 @@ app.prepare()
       return handle(req, res)
     });
 
-    server.listen(3000, (err) => {
+    server.listen(port, (err) => {
       if (err) throw err;
-      console.log('> Ready on http://localhost:3000');
+      console.log(`> Ready on port ${port}`);
     });
   })
   .catch((ex) => {
