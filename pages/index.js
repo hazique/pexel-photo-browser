@@ -17,7 +17,7 @@ export default function App() {
     const reloadInterval = window.setInterval(()=>{
       console.log("reloading page");
       router.reload();
-    }, 1000 * 60 * 2);
+    }, 1000 * 60 * 5);
 
   return ()=> window.clearInterval(reloadInterval);
   }, []);
