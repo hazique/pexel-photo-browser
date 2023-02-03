@@ -6,6 +6,7 @@ import ImageBrowser from '../components/imageBrowser';
 import { useEffect, useState } from 'react';
 
 import Navbar from '../components/navBar';
+import ResponsiveAppBar from '../components/ResponsiveAppBar';
 import Search from '../components/search';
 
 export default function App() {
@@ -29,8 +30,9 @@ export default function App() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-        <main className="container">
-          <Navbar />
+        <main>
+          {/* <Navbar /> */}
+          <ResponsiveAppBar />
           <Search searchString={searchString} setSearchString={setSearchString}/>
           <ImageBrowser searchString={searchString} />
 
